@@ -101,6 +101,9 @@ public class Application {
 				String rec = "lat:" + lat + " | lon:" + lon + " | catidx:" + catidx + " | name:" + name + " | comment:"
 						+ comment + " | time:" + time + " | point_id:" + point_id;
 				System.out.println(rec);
+				
+				
+				
 			}
 		}
 	}
