@@ -8,6 +8,9 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -63,6 +66,8 @@ public class Application {
 		InputSource is = new InputSource(new StringReader(responceSTR));
 		Document doc = builder.parse(is);
 
+		ArrayList<Object> hbaseSet = new ArrayList<>();
+
 		NodeList talkList = doc.getElementsByTagName("wpt");
 		for (int i = 0; i < talkList.getLength(); i++) {
 
@@ -101,10 +106,25 @@ public class Application {
 				String rec = "lat:" + lat + " | lon:" + lon + " | catidx:" + catidx + " | name:" + name + " | comment:"
 						+ comment + " | time:" + time + " | point_id:" + point_id;
 				System.out.println(rec);
-				
-				
-				
+
+				Map<String, String> hbaseRecord = new HashMap<>();
+
+				hbaseRecord.put("lat", lat);
+				hbaseRecord.put("lon", lon);
+				hbaseRecord.put("catidx", catidx);
+				hbaseRecord.put("name", name);
+				hbaseRecord.put("comment", comment);
+				hbaseRecord.put("time", time);
+				hbaseRecord.put("point_id", point_id);
+
+				hbaseSet.add(hbaseRecord);
+
 			}
 		}
+
+		if (!hbaseSet.isEmpty())
+			HBaseWriter_Copy.WriteToHBase(hbaseSet);
+		else
+			System.out.println("SKIPPED!!!");
 	}
 }

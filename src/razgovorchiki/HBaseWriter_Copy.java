@@ -11,7 +11,7 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class HBaseWriter {
+public class HBaseWriter_Copy {
 
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public static void WriteToHBase(ArrayList<Object> records) throws IOException {
